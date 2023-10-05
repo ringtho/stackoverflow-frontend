@@ -1,0 +1,26 @@
+.question__container {
+    margin: 0 1rem;
+    padding: 1rem 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    background-color: #2B2C37;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    } 
+}
+
+.tag__container {
+    display: flex;
+    gap: 1.25rem;
+
+    .tag {
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: #20212C;
+    }
+}

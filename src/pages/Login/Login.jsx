@@ -33,7 +33,7 @@ const Login = () => {
   }
 
   return (
-    <div className="auth__container">
+    <section className="auth__container">
       <h1>StackOverflow</h1>
       <form onSubmit={handleSubmit}>
         {error && <div>{error.data.msg}</div>}
@@ -62,7 +62,7 @@ const Login = () => {
           {isSubmitting ? 'SUBMITTING' : 'SUBMIT'}
         </button>
       </form>
-    </div>
+    </section>
   )
 }
 

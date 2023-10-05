@@ -1,0 +1,16 @@
+.ask__wrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+    color: #FFF;
+
+    input {
+        padding: 0.5rem 1rem;
+    }
+
+    textarea {
+        resize: none;
+        height: 120px;
+    }
+}

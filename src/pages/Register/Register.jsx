@@ -36,7 +36,7 @@ const Register = () => {
   }
 
   return (
-    <div className="auth__container">
+    <section className="auth__container">
       <h1>StackOverflow</h1>
       <form onSubmit={handleSubmit}>
         {error && (
@@ -79,7 +79,7 @@ const Register = () => {
           {isSubmitting? 'SUBMITTING' : 'SUBMIT'}
         </button>
       </form>
-    </div>
+    </section>
   )
 }
 

@@ -1,0 +1,19 @@
+.details__container {
+    margin-top: 2rem;
+    border: 1px solid red;
+    color: #FFF;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+
+    .details__wrapper {
+        background-color: #2B2C37;
+        padding: 1.5rem 1rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
