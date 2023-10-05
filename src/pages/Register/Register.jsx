@@ -55,7 +55,7 @@ const Register = () => {
           onChange={handleOnChange}
           required
         />
-        <label>Email</label>
+        <label htmlFor='email'>Email</label>
         <input
           type="email"
           placeholder="eg john@google.com"
@@ -65,7 +65,7 @@ const Register = () => {
           onChange={handleOnChange}
           required
         />
-        <label>Password</label>
+        <label htmlFor='password'>Password</label>
         <input
           type="password"
           placeholder="********"
