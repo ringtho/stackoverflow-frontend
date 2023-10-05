@@ -1,0 +1,27 @@
+.auth__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #2B2C37;
+    color: #FFFFFF;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        width: 400px;
+        gap: 1rem;
+
+        input, button {
+            padding: 0.75rem 0.5rem;
+            border: 1px solid aliceblue;
+            border-radius: 0.5rem;
+        }
+
+    }
+}

@@ -1,11 +1,16 @@
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Login, Register, Home } from './pages'
 
 function App() {
 
   return (
-    <>
-      <h1>Smith Ringtho</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   )
 }
 
