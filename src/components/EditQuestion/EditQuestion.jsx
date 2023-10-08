@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import './EditQuestion.scss'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { editQuestion } from '../../api'
+import { setEditActive } from '../../reduxSlice/questionsSlice'
 
 const EditQuestion = () => {
   const { question: selected } = useSelector((state) => state.questions)
+  const dispatch = useDispatch()
   const [question, setQuestion] = useState({
     _id: selected._id,
     title: selected.title,
@@ -15,7 +17,6 @@ const EditQuestion = () => {
 
   const handleChange = (e) => {
     const value = e.target.value
-    // name === 'tag'? [...question.tag, value]
     const name = e.target.name
     setQuestion({...question, [name]: value })
   }
@@ -34,9 +35,9 @@ const EditQuestion = () => {
    console.log(question)
 
   return (
-    <section className="ask__container">
+    <section className="ask__container form__container">
       <form className="ask__wrapper" onSubmit={handleSubmit}>
-        <h4>Ask Question</h4>
+        <h4>Edit Question</h4>
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -53,15 +54,12 @@ const EditQuestion = () => {
           onChange={handleChange}
           id="description"
         />
-        <label htmlFor="tag">Tag</label>
-        <input
-          type="text"
-          value={question.tag}
-          onChange={handleChange}
-          id="tag"
-          name='tag'
-        />
-        <button>Submit</button>
+        <button 
+          type='button' 
+          className='cancel-button' 
+          onClick={() => dispatch(setEditActive())}
+        >Cancel</button>
+        <button className='submit-button'>Submit</button>
       </form>
     </section>
   )

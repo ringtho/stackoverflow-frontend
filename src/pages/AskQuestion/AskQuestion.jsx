@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './AskQuestion.scss'
 import { addQuestion } from '../../api'
+import { useDispatch } from 'react-redux'
+import { setAskActive } from '../../reduxSlice/questionsSlice'
 
 const AskQuestion = () => {
   const [question, setQuestion] = useState({
@@ -8,9 +10,10 @@ const AskQuestion = () => {
     description: '',
     tag: []
   })
+
+  const dispatch = useDispatch()
   const handleChange = (e) => {
     const value = e.target.value
-    // name === 'tag'? [...question.tag, value]
     const name = e.target.name
     setQuestion({...question, [name]: value })
   }
@@ -27,7 +30,7 @@ const AskQuestion = () => {
 
   console.log(question)
   return (
-    <section className="ask__container">
+    <section className="ask__container form__container">
       <form className="ask__wrapper" onSubmit={handleSubmit}>
         <h4>Ask Question</h4>
         <label htmlFor="title">Title</label>
@@ -52,9 +55,16 @@ const AskQuestion = () => {
           value={question.tag}
           onChange={handleChange}
           id="tag"
-          name='tag'
+          name="tag"
         />
-        <button>Submit</button>
+        <button
+          type="button"
+          className="cancel-button"
+          onClick={() => dispatch(setAskActive())}
+        >
+          Cancel
+        </button>
+        <button className="submit-button">Submit</button>
       </form>
     </section>
   )

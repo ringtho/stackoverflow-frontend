@@ -1,10 +1,19 @@
 .home__container {
-    // background-color: #20212C;
-    color: #000;
+    margin-top: 100px;
+    padding: 2rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+
+    @media screen and (min-width: 720px) {
+        padding: 2rem 0;
+        max-width: 680px;
+    }
 }
 
 .home__controls {
     display: flex;
     justify-content: space-between;
-    padding: 1.5rem 1rem;
 }

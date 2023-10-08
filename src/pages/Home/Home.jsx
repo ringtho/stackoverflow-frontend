@@ -1,14 +1,18 @@
 import { useEffect } from "react"
 import Questions from "../../components/Questions/Questions"
 import { getQuestions } from "../../api"
-import { useDispatch } from "react-redux"
-import { addQuestions } from "../../reduxSlice/questionsSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { addQuestions, setAskActive } from "../../reduxSlice/questionsSlice"
 import './Home.scss'
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
+import EditQuestion from "../../components/EditQuestion/EditQuestion"
+import AskQuestion from "../AskQuestion/AskQuestion"
 
 const Home = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const { isEditActive, isAskActive } = useSelector(state => state.questions)
+
   useEffect (() => {
     const questions = async () => {
       try {
@@ -25,9 +29,16 @@ const Home = () => {
     <section className="home__container">
       <div className="home__controls">
         <h1>Questions</h1>
-        <button onClick={() => navigate('/questions/ask')}>Ask Questions</button>
+        <button
+          className="submit-button"
+          onClick={() => dispatch(setAskActive())}
+        >
+          Ask Question
+        </button>
       </div>
       <Questions />
+      {isEditActive && <EditQuestion />}
+      {isAskActive && <AskQuestion />}
     </section>
   )
 }

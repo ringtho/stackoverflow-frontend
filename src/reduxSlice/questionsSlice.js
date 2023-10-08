@@ -5,7 +5,10 @@ export const questionsSlice = createSlice({
   initialState: {
     questions: [],
     question: {},
-    answers: []
+    answers: [],
+    isAskActive: false,
+    isEditActive: false,
+    isDeleteActive: false,
   },
   reducers: {
     addQuestions: (state, action) => {
@@ -17,8 +20,24 @@ export const questionsSlice = createSlice({
     addAnswers: (state, action) => {
       state.answers = action.payload
     },
+    setEditActive: (state) => {
+      state.isEditActive = !state.isEditActive
+    },
+    setAskActive: (state) => {
+      state.isAskActive = !state.isAskActive
+    },
+    setDeleteActive: (state) => {
+      state.isDeleteActive = !state.isDeleteActive
+    },
   },
 })
 
-export const { addQuestions, addQuestion, addAnswers } = questionsSlice.actions
+export const { 
+  addQuestions, 
+  addQuestion, 
+  addAnswers, 
+  setDeleteActive, 
+  setEditActive ,
+  setAskActive
+} = questionsSlice.actions
 export default questionsSlice.reducer

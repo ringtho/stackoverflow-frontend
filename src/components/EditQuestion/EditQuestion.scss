@@ -1,0 +1,35 @@
+.form__container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.9);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .ask__wrapper {
+        background-color: #FFF;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 1rem;
+        padding: 2rem 1rem;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 1rem;
+        border-radius: 0.5rem;
+
+        label {
+            font-size: 0.9rem;
+        }
+
+        h4 {
+            color: var(--headings-color);
+            font-size: 1.2rem;
+        }
+    }
+}

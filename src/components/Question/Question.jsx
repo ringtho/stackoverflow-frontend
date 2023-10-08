@@ -1,24 +1,40 @@
 import './Question.scss'
 import { useNavigate } from 'react-router-dom'
+import { addQuestion, setDeleteActive, setEditActive } from '../../reduxSlice/questionsSlice'
+import { useDispatch } from 'react-redux'
 
 const Question = (question) => {
-  const {_id: id, title, description, tag } = question
+  const {_id: id, title, description } = question
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleClick = () => {
     navigate(`${id}`)
   }
   return (
-    <section className="question__container" onClick={handleClick}>
-      <h3>{title}</h3>
+    <section className="question__container">
+      <h3 onClick={handleClick}>{title}</h3>
       <p>{description}</p>
-      {tag.length > 0 && <div className='tag__container'>
-        {tag.map((tag, idx) => (
-          <div key={idx} className="tag">
-            {tag}
-          </div>
-        ))}
-      </div>}
+      <div className="question__controls">
+        <div className="control__container edit">
+          <i
+            className="fa-solid fa-pen-to-square"
+            onClick={() => {
+              dispatch(setEditActive())
+              dispatch(addQuestion(question))
+            }}
+          ></i>
+        </div>
+        <div
+          className="control__container delete"
+          onClick={() => {
+            dispatch(setDeleteActive())
+            dispatch(addQuestion(question))
+          }}
+        >
+          <i className="fa-solid fa-trash"></i>
+        </div>
+      </div>
     </section>
   )
 }

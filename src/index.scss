@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Roboto:wght@300;400;700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,71 +8,70 @@
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Raleway', sans-serif;
+  --text-color: #212121;
+  --headings-color: #4C4C6D;
+}
 
-  --color-pizzaRed: #c62828;
-  --color-global-brand-orangered: #ff4500;
-  --color-global-focus: #007fae;
-  --color-interactive-content-disabled: hsla(0,0%,100%,0.25098039215686274);
-  --color-interactive-background-disabled: hsla(0,0%,100%,0.050980392156862744);
-  --color-interactive-pressed: hsla(0,0%,100%,0.1607843137254902);
-  --color-neutral-content: #b8c5c9;
-  --color-neutral-content-disabled: #303030;
-  --color-neutral-content-weak: #82959b;
-  --color-neutral-content-strong: #f2f4f5;
-  --color-neutral-background: #0b1416;
-  --color-neutral-background-selected: #1a282d;
-  --color-neutral-background-weak: #04090a;
-  --color-neutral-background-medium: #131313;
-  --color-neutral-background-strong: #0f1a1c;
-  --color-neutral-background-hover: #131f23;
-  --color-neutral-border: hsla(0,0%,100%,0.2);
-  --color-neutral-border-medium: hsla(0,0%,100%,0.5019607843137255);
-  --color-neutral-border-weak: hsla(0,0%,100%,0.10196078431372549);
-  --color-neutral-border-strong: #f2f4f5;
-  --color-primary: #629fff;
-  --color-primary-hover: #a7ccff;
-  --color-primary-visited: #d55eff;
-  --color-primary-background: #0045ac;
-  --color-primary-background-hover: #1870f4;
-  --color-primary-background-selected: #629fff;
-  --color-primary-onBackground: #fff;
-  --color-primary-onBackground-selected: #000;
-  --color-secondary: #f2f4f5;
-  --color-secondary-hover: #fff;
-  --color-secondary-weak: #82959b;
-  --color-secondary-onBackground: #fff;
-  --color-secondary-background: #1a282d;
-  --color-secondary-background-hover: #223237;
-  --color-secondary-background-selected: #33464c;
-  --color-danger-background: #a50016;
-  --color-danger-background-disabled: #3a0008;
-  --color-danger-background-hover: #eb001f;
-  --color-danger-content: #ff6e80;
-  --color-danger-content-hover: #ffadb8;
-  --color-success-content: #55bd46;
-  --color-success-hover: #a3e398;
-  --color-success-onBackground: #fff;
-  --color-success-background: #0a6000;
-  --color-success-background-hover: #0e8a00;
-  --color-warning-content: #dbaf00;
-  --color-warning-content-hover: #fadb61;
-  --color-warning-onBackground: #000;
-  --color-warning-background: #dbaf00;
-  --color-warning-background-hover: #fadb61;
+body {
+  color: var(--text-color);
+}
+
+h1, h2, h3,h4 {
+  font-family: 'Roboto', sans-serif;
+}
+
+input, textarea {
+  border: 1px solid #CDDEFF;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: var(--headings-color);
+
+  &:focus {
+    outline: none;
+    border: 1px solid #676FA3;
+  }
 }
 
 button {
+  font-family: 'Raleway', sans-serif;
+  padding: 0.75rem 1rem;
+  outline: none;
+  border: none;
+  // border: 1px solid var(--text-color);
+  background-color: #FFFFFF;
+
   &:hover,
   &:focus {
     cursor: pointer;
+    opacity: 0.8;
+    transition-duration: 0.5s;
   }
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.8;
   }
+}
+
+.cancel-button {
+  background-color: #FF5959;
+  color: #FFFFFF;
+
+
+}
+
+.submit-button {
+  background-color: var(--headings-color);
+  color: #FFFFFF;
 }
 
 a {
   color: #FFFFFF;
   text-decoration: none;
+}
+
+textarea {
+  resize: none;
+  height: 120px;
 }
