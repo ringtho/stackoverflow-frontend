@@ -47,3 +47,9 @@ export const getSingleQuestion = async (id) => {
     const data = await axios.get(`${API_URL}/questions/${id}`, config)
     return data
 }
+
+export const editQuestion = async (question) => {
+  const config = getAuthHeaders()
+  const data = await axios.patch(`${API_URL}/questions/${question._id}`, {...question }, config)
+  return data
+}

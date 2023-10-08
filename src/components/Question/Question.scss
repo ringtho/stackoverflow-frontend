@@ -6,7 +6,8 @@
     flex-direction: column;
     gap: 1rem;
 
-    background-color: #2B2C37;
+    background-color: #f2f4f5;
+    color: #000;
 
     &:hover,
     &:focus {
@@ -21,6 +22,7 @@
     .tag {
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
-        background-color: #20212C;
+        background-color: #007fae;
+        color: #FFF;
     }
 }
