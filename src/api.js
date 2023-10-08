@@ -48,8 +48,22 @@ export const getSingleQuestion = async (id) => {
     return data
 }
 
+
 export const editQuestion = async (question) => {
   const config = getAuthHeaders()
-  const data = await axios.patch(`${API_URL}/questions/${question._id}`, {...question }, config)
+  const data = await axios.patch(
+    `${API_URL}/questions/${question._id}`,
+    { ...question },
+    config
+  )
+  return data
+}
+
+export const deleteQuestion = async (question) => {
+  const config = getAuthHeaders()
+  const data = await axios.delete(
+    `${API_URL}/questions/${question._id}`,
+    config
+  )
   return data
 }

@@ -4,14 +4,13 @@ import { getQuestions } from "../../api"
 import { useDispatch, useSelector } from "react-redux"
 import { addQuestions, setAskActive } from "../../reduxSlice/questionsSlice"
 import './Home.scss'
-// import { useNavigate } from "react-router-dom"
 import EditQuestion from "../../components/EditQuestion/EditQuestion"
-import AskQuestion from "../AskQuestion/AskQuestion"
+import AskQuestion from "../../components/AskQuestion/AskQuestion"
+import DeleteQuestion from "../../components/DeleteQuestion/DeleteQuestion"
 
 const Home = () => {
   const dispatch = useDispatch()
-  // const navigate = useNavigate()
-  const { isEditActive, isAskActive } = useSelector(state => state.questions)
+  const { isEditActive, isAskActive, isDeleteActive } = useSelector(state => state.questions)
 
   useEffect (() => {
     const questions = async () => {
@@ -39,6 +38,7 @@ const Home = () => {
       <Questions />
       {isEditActive && <EditQuestion />}
       {isAskActive && <AskQuestion />}
+      {isDeleteActive && <DeleteQuestion />}
     </section>
   )
 }

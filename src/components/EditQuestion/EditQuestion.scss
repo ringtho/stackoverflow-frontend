@@ -31,5 +31,9 @@
             color: var(--headings-color);
             font-size: 1.2rem;
         }
+
+        @media screen and (min-width: 500px) {
+            padding: 2rem;
+        }
     }
 }

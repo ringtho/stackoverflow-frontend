@@ -49,14 +49,6 @@ const AskQuestion = () => {
           onChange={handleChange}
           id="description"
         />
-        <label htmlFor="tag">Tag</label>
-        <input
-          type="text"
-          value={question.tag}
-          onChange={handleChange}
-          id="tag"
-          name="tag"
-        />
         <button
           type="button"
           className="cancel-button"
