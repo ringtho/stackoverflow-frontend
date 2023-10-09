@@ -8,24 +8,26 @@
 }
 
 :root {
-  font-family: 'Raleway', sans-serif;
+  --primary-font: 'Raleway', sans-serif;
   --text-color: #212121;
   --headings-color: #4C4C6D;
+  --secondary-font: 'Roboto', sans-serif;
 }
 
 body {
+  font-family: var(--primary-font);
   color: var(--text-color);
 }
 
 h1, h2, h3,h4 {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--secondary-font);
 }
 
 input, textarea {
   border: 1px solid #CDDEFF;
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--secondary-font);
   color: var(--headings-color);
   line-height: 22px;
 
@@ -36,7 +38,7 @@ input, textarea {
 }
 
 button {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--primary-font);
   padding: 0.75rem 1rem;
   outline: none;
   border: none;

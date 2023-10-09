@@ -67,3 +67,14 @@ export const deleteQuestion = async (question) => {
   )
   return data
 }
+
+export const addAnswer = async ({ answer, id }) => {
+  console.log(answer)
+  const config = getAuthHeaders()
+  const data = await axios.post(
+    `${API_URL}/questions/${id}/answers`,
+    { answer },
+    config
+  )
+  return data
+}
