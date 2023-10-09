@@ -69,10 +69,19 @@ export const deleteQuestion = async (question) => {
 }
 
 export const addAnswer = async ({ answer, id }) => {
-  console.log(answer)
   const config = getAuthHeaders()
   const data = await axios.post(
     `${API_URL}/questions/${id}/answers`,
+    { answer },
+    config
+  )
+  return data
+}
+
+export const editAnswer = async ({ answer, answerId, questionId }) => {
+  const config = getAuthHeaders()
+  const data = await axios.put(
+    `${API_URL}/questions/${questionId}/answers/${answerId}`,
     { answer },
     config
   )

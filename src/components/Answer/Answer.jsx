@@ -2,13 +2,21 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { setDeleteActive, setEditActive } from '../../reduxSlice/questionsSlice'
+import { setDeleteAnswerActive, setEditAnswerActive } from '../../reduxSlice/answersSlice'
+import { addAnswer } from '../../reduxSlice/answersSlice'
 
 const Answer = ({ answer }) => {
   const { _id, answer: title, createdAt, posted_by: postedBy } = answer
   dayjs.extend(relativeTime)
   const dispatch = useDispatch()
-  console.log(answer)
+
+  const handleClick = (action) => {
+    if (action === 'edit') {
+        dispatch(addAnswer({ answer }))
+        dispatch(setEditAnswerActive())
+    }  
+  }
+
   return (
     <div key={_id} className="answer__detail">
       <div className="userdetails_container answer__user">
@@ -23,15 +31,13 @@ const Answer = ({ answer }) => {
         <div className="control__container edit">
           <i
             className="fa-solid fa-pen-to-square"
-            onClick={() => {
-              dispatch(setEditActive())
-            }}
+            onClick={() => handleClick('edit')}
           ></i>
         </div>
         <div
           className="control__container delete"
           onClick={() => {
-            dispatch(setDeleteActive())
+            dispatch(setDeleteAnswerActive())
           }}
         >
           <i className="fa-solid fa-trash"></i>

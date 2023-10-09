@@ -10,12 +10,17 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Answer from "../../components/Answer/Answer"
 import AddAnswer from "../../components/AddAnswer/AddAnswer"
+import EditAnswer from "../../components/EditAnswer/EditAnswer"
+import DeleteAnswer from "../../components/DeleteAnswer/DeleteAnswer"
 
 const QuestionDetail = () => {
   const { isEditActive, question, isDeleteActive } = useSelector(
     (state) => state.questions
   )
-  console.log(question)
+  const { 
+    isEditAnswerActive, 
+    isDeleteAnswerActive 
+  } = useSelector((state) => state.answers)
   dayjs.extend(relativeTime)
   const { title, description, createdAt, posted_by: postedBy, answers } = question
   const { id } = useParams()
@@ -43,8 +48,6 @@ const QuestionDetail = () => {
       dispatch(setDeleteActive())
     }
   }
-
-  console.log(answers)
 
   return (
     <div className="details__container">
@@ -85,6 +88,8 @@ const QuestionDetail = () => {
       </div>
       {isEditActive && <EditQuestion />}
       {isDeleteActive && <DeleteQuestion />}
+      {isEditAnswerActive && <EditAnswer />}
+      {isDeleteAnswerActive && <DeleteAnswer />}
     </div>
   )
 }
