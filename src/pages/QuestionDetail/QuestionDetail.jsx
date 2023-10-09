@@ -7,7 +7,7 @@ import './QuestionDetail.scss'
 
 const QuestionDetail = () => {
   const { question, answers } = useSelector((state) => state.questions)
-  const { title, description, tag } = question
+  const { title, description } = question
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -33,31 +33,25 @@ const QuestionDetail = () => {
 
   return (
     <div className="details__container">
-      <h4>{title}</h4>
       <div className="details__wrapper">
+        <h4>{title}</h4>
         <p>{description}</p>
-        {tag?.length > 0 && (
-          <div className="tag__container">
-            {tag?.map((tag, idx) => (
-              <div key={idx} className="tag">
-                {tag}
-              </div>
-            ))}
-          </div>
-        )}
-        <div>
-          <button onClick={handleClick}>Edit</button>
+        <div className="details-controls">
+          <button className="submit-button" onClick={handleClick}>Edit</button>
+          <button className="cancel-button" onClick={handleClick}>Delete</button>
         </div>
       </div>
-      { answers.length > 0 && <div className="answers__container">
-        { answers.map((answer, idx) => {
-          return (
-            <div key={idx} className="answer__wrapper">
-              <p>{answer.answer}</p>
-            </div>
-          )
-        })}
-      </div>}
+      {answers.length > 0 && (
+        <div className="answers__container">
+          {answers.map((answer, idx) => {
+            return (
+              <div key={idx} className="answer__wrapper">
+                <p>{answer.answer}</p>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

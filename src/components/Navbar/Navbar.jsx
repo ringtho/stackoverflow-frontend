@@ -6,7 +6,9 @@ const Navbar = () => {
   return (
     <nav className="nav__container">
         <div className='logo'>
-            <h3>StackOverflow</h3>
+            <h3>
+              <Link to='/'>StackOverflow</Link>
+            </h3>
         </div>
         <div>
             { !token 
