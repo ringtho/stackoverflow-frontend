@@ -87,3 +87,13 @@ export const editAnswer = async ({ answer, answerId, questionId }) => {
   )
   return data
 }
+
+export const deleteAnswer = async ({ answerId, questionId }) => {
+  const config = getAuthHeaders()
+  const data = await axios.delete(
+    `${API_URL}/questions/${questionId}/answers/${answerId}`,
+    config
+  )
+  return data
+}
+

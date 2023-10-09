@@ -14,7 +14,10 @@ const Answer = ({ answer }) => {
     if (action === 'edit') {
         dispatch(addAnswer({ answer }))
         dispatch(setEditAnswerActive())
-    }  
+    } else if (action === 'delete') {
+        dispatch(addAnswer({ answer }))
+        dispatch(setDeleteAnswerActive())
+    }
   }
 
   return (
@@ -37,7 +40,7 @@ const Answer = ({ answer }) => {
         <div
           className="control__container delete"
           onClick={() => {
-            dispatch(setDeleteAnswerActive())
+            dispatch(() => handleClick('delete'))
           }}
         >
           <i className="fa-solid fa-trash"></i>

@@ -1,11 +1,29 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setDeleteAnswerActive } from "../../reduxSlice/answersSlice"
+import { deleteAnswer } from "../../api"
 
 const DeleteAnswer = () => {
   const dispatch = useDispatch()
+  const {
+    answers: {
+      answer: { answer },
+    },
+    questions: { question },
+  } = useSelector((state) => state)
 
-  const handleSubmit = (e) => {
+  console.log(answer)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    try {
+        const res = await deleteAnswer({ 
+            answerId: answer._id, 
+            questionId: question._id
+        })
+        console.log(res)
+    } catch(error) {
+        console.log(error)
+    }
   }
   return (
     <section className="form__container">
