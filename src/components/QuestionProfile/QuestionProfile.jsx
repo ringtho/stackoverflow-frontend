@@ -1,20 +1,31 @@
-import './Question.scss'
+import './QuestionProfile.scss'
 import { useNavigate } from 'react-router-dom'
-import { addQuestion, setDeleteActive, setEditActive } from '../../reduxSlice/questionsSlice'
+import {
+  addQuestion,
+  setDeleteActive,
+  setEditActive,
+} from '../../reduxSlice/questionsSlice'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
-const Question = (question) => {
-  const {_id: id, title, description, posted_by: postedBy, createdAt, answers } = question
+const QuestionProfile = (question) => {
+
+  const {
+    _id: id,
+    title,
+    description,
+    createdAt,
+    answers,
+  } = question
   const dispatch = useDispatch()
   const navigate = useNavigate()
   dayjs.extend(relativeTime)
 
   const handleClick = () => {
-    navigate(`${id}`)
-  }
+    navigate(`/${id}`)
+  }  
+  
   return (
     <section className="question__container">
       <div>
@@ -25,15 +36,9 @@ const Question = (question) => {
         <div
           className={answers.length > 0 ? 'answers answers__filled' : 'answers'}
         >
-          <p>{answers.length} {answers.length === 1 ? 'answer' : 'answers'}</p>
+          <p>{answers.length} answers</p>
         </div>
         <div className="question__username">
-          <small>
-            <Link to={`/profile/${postedBy?._id}`}>
-              <p>{postedBy?.name}</p>
-            </Link>
-          </small>
-          <span>||</span>
           <small>asked {dayjs(createdAt).fromNow()}</small>
         </div>
       </div>
@@ -61,4 +66,4 @@ const Question = (question) => {
   )
 }
 
-export default Question
+export default QuestionProfile

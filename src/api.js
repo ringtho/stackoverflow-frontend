@@ -48,6 +48,15 @@ export const getSingleQuestion = async (id) => {
     return data
 }
 
+export const getUser = async (id) => {
+  const config = getAuthHeaders()
+  const data = await axios.get(
+    `${API_URL}/user/${id}`,
+    config
+  )
+  return data
+}
+
 
 export const editQuestion = async (question) => {
   const config = getAuthHeaders()
