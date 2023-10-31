@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../../api'
 import './Profile.scss'
 import { useEffect } from 'react'
-import { setUser } from '../../reduxSlice/usersSlice'
+import { setProfile } from '../../reduxSlice/usersSlice'
 import QuestionProfile from '../../components/QuestionProfile/QuestionProfile'
 import EditQuestion from '../../components/EditQuestion/EditQuestion'
 import DeleteQuestion from '../../components/DeleteQuestion/DeleteQuestion'
@@ -10,19 +10,20 @@ import { useParams } from 'react-router-dom'
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const { user: { userInfo } } = useSelector(state => state)
+  const { profile } = useSelector(state => state.user)
   const { isEditActive, isDeleteActive } = useSelector(
     (state) => state.questions
   )
   const { id}  = useParams()
-  const { name, email, questions } = userInfo
+  const { name, email, questions } = profile
 
   useEffect(() => {
     const getUserDetails = async () => {
-      dispatch(setUser({}))
+      dispatch(setProfile({}))
       try {
         const { data: { user } } = await getUser(id)
-        dispatch(setUser(user))
+        console.log(user)
+        dispatch(setProfile(user))
       } catch (error) {
         console.log(error)
       }

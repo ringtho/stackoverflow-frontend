@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import PropTypes from 'prop-types'
 
-const Question = (question) => {
-  const {_id: id, title, description, posted_by: postedBy, createdAt, answers } = question
+
+const Question = ({ question, user }) => {
+  const {_id: id, title, description, posted_by: postedBy, createdAt, answers, createdBy } = question
   const dispatch = useDispatch()
   const navigate = useNavigate()
   dayjs.extend(relativeTime)
@@ -15,6 +17,7 @@ const Question = (question) => {
   const handleClick = () => {
     navigate(`${id}`)
   }
+  
   return (
     <section className="question__container">
       <div>
@@ -37,7 +40,9 @@ const Question = (question) => {
           <small>asked {dayjs(createdAt).fromNow()}</small>
         </div>
       </div>
+      { (user._id === createdBy) && (
       <div className="question__controls">
+        
         <div className="control__container edit">
           <i
             className="fa-solid fa-pen-to-square"
@@ -56,9 +61,14 @@ const Question = (question) => {
         >
           <i className="fa-solid fa-trash"></i>
         </div>
-      </div>
+      </div>)}
     </section>
   )
+}
+
+Question.propTypes = {
+  question: PropTypes.object,
+  user: PropTypes.object
 }
 
 export default Question

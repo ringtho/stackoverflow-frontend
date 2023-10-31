@@ -3,9 +3,10 @@ import './Questions.scss'
 import { useSelector } from 'react-redux/'
 
 const Questions = () => {
-  const { questions: { questions } } = useSelector((state) => state)
+  const { questions } = useSelector((state) => state.questions)
+  const { user } = useSelector((state) => state.user)
   const questionList = questions.map((question) => {
-    return <Question key={question._id} {...question} />
+    return <Question key={question._id} question={question} user={user}  />
   })
   
   return (

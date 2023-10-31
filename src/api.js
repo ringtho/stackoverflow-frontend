@@ -57,6 +57,11 @@ export const getUser = async (id) => {
   return data
 }
 
+export const getAuthenticatedUser = async () => {
+  const config = getAuthHeaders()
+  const data = await axios.get(`${API_URL}/user`, config)
+  return data
+}
 
 export const editQuestion = async (question) => {
   const config = getAuthHeaders()

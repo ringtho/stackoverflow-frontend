@@ -1,8 +1,22 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.scss'
+import { getAuthenticatedUser } from '../../api'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../reduxSlice/usersSlice'
 
 const Navbar = () => {
   const { token } = JSON.parse(localStorage.getItem('stackUser'))
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await getAuthenticatedUser()
+      dispatch(setUser(user))
+    }
+    getUser()
+  }, [dispatch])
+
   return (
     <nav className="nav__container">
         <div className='logo'>
