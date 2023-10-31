@@ -30,7 +30,7 @@ const Profile = () => {
     }
     getUserDetails()
 
-  },[])
+  },[dispatch, id])
 
   const questionsList = questions?.map((question) => {
     return <QuestionProfile key={question._id} {...question} />

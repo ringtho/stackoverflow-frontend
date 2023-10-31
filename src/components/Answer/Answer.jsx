@@ -1,12 +1,13 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setDeleteAnswerActive, setEditAnswerActive } from '../../reduxSlice/answersSlice'
 import { addAnswer } from '../../reduxSlice/answersSlice'
 
 const Answer = ({ answer }) => {
-  const { _id, answer: title, createdAt, posted_by: postedBy } = answer
+  const { _id, answer: title, createdAt, posted_by: postedBy, createdBy } = answer
+  const { user } = useSelector((state) => state.user)
   dayjs.extend(relativeTime)
   const dispatch = useDispatch()
 
@@ -30,7 +31,7 @@ const Answer = ({ answer }) => {
         <small>answered {dayjs(createdAt).fromNow()}</small>
       </div>
       <p>{title}</p>
-      <div className="question__controls">
+      { createdBy === user._id && <div className="question__controls">
         <div className="control__container edit">
           <i
             className="fa-solid fa-pen-to-square"
@@ -45,7 +46,7 @@ const Answer = ({ answer }) => {
         >
           <i className="fa-solid fa-trash"></i>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

@@ -5,9 +5,8 @@ import { setEditAnswerActive } from '../../reduxSlice/answersSlice'
 import { editAnswer } from '../../api'
 
 const EditAnswer = () => {
-  const {
-    answers: { answer: { answer } }, questions: { question }
-  } = useSelector((state) => state)
+  const { question } = useSelector((state) => state.questions)
+  const { answer: { answer } } = useSelector((state) => state.answers)
   const [updatedAnswer, setUpdatedAnswer] = useState(answer)
   const dispatch = useDispatch()
   

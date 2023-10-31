@@ -21,8 +21,9 @@ const QuestionDetail = () => {
     isEditAnswerActive, 
     isDeleteAnswerActive 
   } = useSelector((state) => state.answers)
+  const { user } = useSelector((state) => state.user)
   dayjs.extend(relativeTime)
-  const { title, description, createdAt, posted_by: postedBy, answers } = question
+  const { title, description, createdAt, posted_by: postedBy, answers, createdBy } = question
   const { id } = useParams()
   const dispatch = useDispatch()
 
@@ -39,7 +40,7 @@ const QuestionDetail = () => {
       }
     }
     getQuestion()
-  }, [])
+  }, [dispatch, id])
 
   const handleClick = (action) => {
     if (action === 'edit') {
@@ -55,7 +56,7 @@ const QuestionDetail = () => {
         <div className="details">
           <h3>{title}</h3>
           <p>{description}</p>
-          <div className="details-controls">
+          { user._id === createdBy && <div className="details-controls">
             <button
               className="submit-button"
               onClick={() => handleClick('edit')}
@@ -68,7 +69,7 @@ const QuestionDetail = () => {
             >
               Delete
             </button>
-          </div>
+          </div>}
         </div>
         <div className="username_details">
           <small>asked {dayjs(createdAt).fromNow()}</small>

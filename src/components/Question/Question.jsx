@@ -9,7 +9,15 @@ import PropTypes from 'prop-types'
 
 
 const Question = ({ question, user }) => {
-  const {_id: id, title, description, posted_by: postedBy, createdAt, answers, createdBy } = question
+  const {
+    _id: id, 
+    title, 
+    description, 
+    posted_by: postedBy, 
+    createdAt, 
+    answers, 
+    createdBy 
+  } = question
   const dispatch = useDispatch()
   const navigate = useNavigate()
   dayjs.extend(relativeTime)
@@ -17,7 +25,7 @@ const Question = ({ question, user }) => {
   const handleClick = () => {
     navigate(`${id}`)
   }
-  
+
   return (
     <section className="question__container">
       <div>
