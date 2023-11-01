@@ -9,7 +9,8 @@ export const questionsSlice = createSlice({
     isAskActive: false,
     isEditActive: false,
     isDeleteActive: false,
-    isLoading: false
+    isLoading: false,
+    reload: false
   },
   reducers: {
     addQuestions: (state, action) => {
@@ -32,6 +33,9 @@ export const questionsSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload
+    },
+    setReload: (state, action) => {
+      state.reload = action.payload
     }
   },
 })
@@ -43,6 +47,7 @@ export const {
   setDeleteActive, 
   setEditActive ,
   setAskActive,
-  setLoading
+  setLoading,
+  setReload
 } = questionsSlice.actions
 export default questionsSlice.reducer

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getSingleQuestion } from "../../api"
 import { useDispatch, useSelector } from "react-redux"
-import { addAnswers, addQuestion, setDeleteActive, setEditActive, setLoading } from "../../reduxSlice/questionsSlice"
+import { addAnswers, addQuestion, setDeleteActive, setEditActive, setLoading, setReload } from "../../reduxSlice/questionsSlice"
 import './QuestionDetail.scss'
 import EditQuestion from "../../components/EditQuestion/EditQuestion"
 import DeleteQuestion from "../../components/DeleteQuestion/DeleteQuestion"
@@ -15,7 +15,7 @@ import DeleteAnswer from "../../components/DeleteAnswer/DeleteAnswer"
 import Loading from '../../components/Loading/Loading'
 
 const QuestionDetail = () => {
-  const { isEditActive, question, isDeleteActive, isLoading } = useSelector(
+  const { isEditActive, question, isDeleteActive, isLoading, reload } = useSelector(
     (state) => state.questions
   )
   const { 
@@ -33,6 +33,7 @@ const QuestionDetail = () => {
       dispatch(addQuestion({}))
       dispatch(addAnswers([]))
       dispatch(setLoading(true))
+      dispatch(setReload(false))
       try {
         const { data } = await getSingleQuestion(id)
         dispatch(addQuestion(data.question))
@@ -43,7 +44,7 @@ const QuestionDetail = () => {
       }
     }
     getQuestion()
-  }, [dispatch, id])
+  }, [dispatch, id, reload])
 
   const handleClick = (action) => {
     if (action === 'edit') {
@@ -55,7 +56,7 @@ const QuestionDetail = () => {
 
   return (
     <div className="details__container">
-      {isLoading ? <Loading />
+      {isLoading && !reload ? <Loading />
       : <div className="details__wrapper">
         <div className="details">
           <h3>{title}</h3>

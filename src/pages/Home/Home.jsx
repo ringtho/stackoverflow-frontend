@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import Questions from "../../components/Questions/Questions"
 import { getQuestions } from "../../api"
 import { useDispatch, useSelector } from "react-redux"
-import { addQuestions, setAskActive, setLoading } from "../../reduxSlice/questionsSlice"
+import { addQuestions, setAskActive, setLoading, setReload } from "../../reduxSlice/questionsSlice"
 import './Home.scss'
 import EditQuestion from "../../components/EditQuestion/EditQuestion"
 import AskQuestion from "../../components/AskQuestion/AskQuestion"
@@ -15,10 +15,13 @@ const Home = () => {
     isEditActive, 
     isAskActive, 
     isDeleteActive, 
-    isLoading } = useSelector(state => state.questions)
+    isLoading,
+    reload
+  } = useSelector(state => state.questions)
 
   useEffect (() => {
     dispatch(setLoading(true))
+    dispatch(setReload(false))
     const questions = async () => {
       try {
         const { data : { questions } } = await getQuestions()
@@ -29,11 +32,11 @@ const Home = () => {
       }
     }
     questions()
-  }, [])
+  }, [reload, dispatch])
 
   return (
     <>
-      {isLoading ? (
+      {(isLoading && !reload) ?  (
         <Loading />
       ) : (
         <section className="home__container">

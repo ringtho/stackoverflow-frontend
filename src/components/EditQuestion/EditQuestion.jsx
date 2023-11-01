@@ -2,9 +2,10 @@ import { useState } from 'react'
 import './EditQuestion.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import { editQuestion } from '../../api'
-import { setEditActive } from '../../reduxSlice/questionsSlice'
+import { setEditActive, setReload } from '../../reduxSlice/questionsSlice'
 
 const EditQuestion = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { question: selected } = useSelector((state) => state.questions)
   const dispatch = useDispatch()
   const [question, setQuestion] = useState({
@@ -22,17 +23,17 @@ const EditQuestion = () => {
   }
 
   const handleSubmit = async (e) => {
+    setIsSubmitting(true)
     e.preventDefault()
     try {
-        console.log(question)
-        const res = await editQuestion(question)
-        console.log(res)
+        await editQuestion(question)
+        setIsSubmitting(false)
+        dispatch(setReload(true))
+        dispatch(setEditActive())
     } catch(error) {
         console.log(error)
     }
-   }
-
-   console.log(question)
+  }
 
   return (
     <section className="ask__container form__container">
@@ -59,7 +60,9 @@ const EditQuestion = () => {
           className='cancel-button' 
           onClick={() => dispatch(setEditActive())}
         >Cancel</button>
-        <button className='submit-button'>Submit</button>
+        <button className='submit-button'>
+          {isSubmitting ? 'Submitting...': 'Submit'}
+        </button>
       </form>
     </section>
   )

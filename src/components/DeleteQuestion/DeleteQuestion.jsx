@@ -1,17 +1,21 @@
-
+import { useState } from 'react'
 import './DeleteQuestion.scss'
-import { setDeleteActive } from '../../reduxSlice/questionsSlice'
+import { setDeleteActive, setReload } from '../../reduxSlice/questionsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteQuestion } from '../../api'
 
 const DeleteQuestion = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const dispatch = useDispatch()
   const { question } = useSelector(state => state.questions)
 
   const handleSubmit = async () => {
+    setIsSubmitting(true)
     try {
-        const res = await deleteQuestion(question)
-        console.log(res)
+        await deleteQuestion(question)
+        setIsSubmitting(false)
+        dispatch(setDeleteActive())
+        dispatch(setReload(true))
     } catch (error) {
         console.log(error)
     }
@@ -21,15 +25,19 @@ const DeleteQuestion = () => {
     <section className="form__container">
       <div className="ask__wrapper">
         <h4>Delete Question</h4>
-        <p className='delete-text'>
+        <p className="delete-text">
           Are you sure you want to delete this question? This action cannot be
           reversed
         </p>
-        <button 
-          className="cancel-button" 
+        <button
+          className="cancel-button"
           onClick={() => dispatch(setDeleteActive())}
-        >Cancel</button>
-        <button className="submit-button" onClick={handleSubmit}>Delete</button>
+        >
+          Cancel
+        </button>
+        <button className="submit-button" onClick={handleSubmit}>
+          {isSubmitting ? 'Deleting...' : 'Delete'}
+        </button>
       </div>
     </section>
   )

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './AskQuestion.scss'
 import { addQuestion } from '../../api'
 import { useDispatch } from 'react-redux'
-import { setAskActive } from '../../reduxSlice/questionsSlice'
+import { setAskActive, setReload } from '../../reduxSlice/questionsSlice'
 
 const AskQuestion = () => {
   const [question, setQuestion] = useState({
@@ -10,6 +10,7 @@ const AskQuestion = () => {
     description: '',
     tag: []
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const dispatch = useDispatch()
   const handleChange = (e) => {
@@ -19,16 +20,18 @@ const AskQuestion = () => {
   }
 
   const handleSubmit = async (e) => {
+    setIsSubmitting(true)
     e.preventDefault()
     try {
-        const res = await addQuestion(question)
-        console.log(res)
+        await addQuestion(question)
+        setIsSubmitting(false)
+        dispatch(setAskActive())
+        dispatch(setReload(true))
     } catch(error) {
         console.log(error)
     }
   }
 
-  console.log(question)
   return (
     <section className="ask__container form__container">
       <form className="ask__wrapper" onSubmit={handleSubmit}>
@@ -56,7 +59,9 @@ const AskQuestion = () => {
         >
           Cancel
         </button>
-        <button className="submit-button">Submit</button>
+        <button className="submit-button">
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
     </section>
   )
