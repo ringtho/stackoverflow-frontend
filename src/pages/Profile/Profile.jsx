@@ -7,11 +7,13 @@ import QuestionProfile from '../../components/QuestionProfile/QuestionProfile'
 import EditQuestion from '../../components/EditQuestion/EditQuestion'
 import DeleteQuestion from '../../components/DeleteQuestion/DeleteQuestion'
 import { useParams } from 'react-router-dom'
+import { setLoading } from '../../reduxSlice/questionsSlice'
+import Loading from '../../components/Loading/Loading'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const { profile } = useSelector(state => state.user)
-  const { isEditActive, isDeleteActive } = useSelector(
+  const { isEditActive, isDeleteActive, isLoading } = useSelector(
     (state) => state.questions
   )
   const { id}  = useParams()
@@ -20,10 +22,12 @@ const Profile = () => {
   useEffect(() => {
     const getUserDetails = async () => {
       dispatch(setProfile({}))
+      dispatch(setLoading(true))
       try {
         const { data: { user } } = await getUser(id)
         console.log(user)
         dispatch(setProfile(user))
+        dispatch(setLoading(false))
       } catch (error) {
         console.log(error)
       }
@@ -38,7 +42,7 @@ const Profile = () => {
 
   return (
     <div className="details__container">
-      <div className="details__wrapper">
+      {isLoading ? <Loading /> :<div className="details__wrapper">
         <div className="details user">
           <div className="avatar">SR</div>
           <h3>{name}</h3>
@@ -51,7 +55,7 @@ const Profile = () => {
         </div>
         <div className='questionprofile__list'>{questionsList}</div>
         <div className="answers__container"></div>
-      </div>
+      </div>}
       {isEditActive && <EditQuestion />}
       {isDeleteActive && <DeleteQuestion />}
     </div>

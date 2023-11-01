@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getSingleQuestion } from "../../api"
 import { useDispatch, useSelector } from "react-redux"
-import { addAnswers, addQuestion, setDeleteActive, setEditActive } from "../../reduxSlice/questionsSlice"
+import { addAnswers, addQuestion, setDeleteActive, setEditActive, setLoading } from "../../reduxSlice/questionsSlice"
 import './QuestionDetail.scss'
 import EditQuestion from "../../components/EditQuestion/EditQuestion"
 import DeleteQuestion from "../../components/DeleteQuestion/DeleteQuestion"
@@ -12,9 +12,10 @@ import Answer from "../../components/Answer/Answer"
 import AddAnswer from "../../components/AddAnswer/AddAnswer"
 import EditAnswer from "../../components/EditAnswer/EditAnswer"
 import DeleteAnswer from "../../components/DeleteAnswer/DeleteAnswer"
+import Loading from '../../components/Loading/Loading'
 
 const QuestionDetail = () => {
-  const { isEditActive, question, isDeleteActive } = useSelector(
+  const { isEditActive, question, isDeleteActive, isLoading } = useSelector(
     (state) => state.questions
   )
   const { 
@@ -31,10 +32,12 @@ const QuestionDetail = () => {
     const getQuestion = async () => {
       dispatch(addQuestion({}))
       dispatch(addAnswers([]))
+      dispatch(setLoading(true))
       try {
         const { data } = await getSingleQuestion(id)
         dispatch(addQuestion(data.question))
         dispatch(addAnswers(data.answers))
+        dispatch(setLoading(false))
       } catch (error) {
         console.log(error)
       }
@@ -52,7 +55,8 @@ const QuestionDetail = () => {
 
   return (
     <div className="details__container">
-      <div className="details__wrapper">
+      {isLoading ? <Loading />
+      : <div className="details__wrapper">
         <div className="details">
           <h3>{title}</h3>
           <p>{description}</p>
@@ -86,7 +90,7 @@ const QuestionDetail = () => {
           })}
         </div>
         <AddAnswer />
-      </div>
+      </div>}
       {isEditActive && <EditQuestion />}
       {isDeleteActive && <DeleteQuestion />}
       {isEditAnswerActive && <EditAnswer />}
