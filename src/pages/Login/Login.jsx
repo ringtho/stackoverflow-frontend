@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { loginUser } from '../../api'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import './Login.scss'
 
@@ -13,6 +13,7 @@ const Login = () => {
   const [error, setError] = useState(null)
 
   const navigate = useNavigate()
+  const { state } = useLocation()
   const handleOnChange = (e) => {
     const name = e.target.name
     const value = e.target.value
@@ -20,7 +21,6 @@ const Login = () => {
   }
 
   const onSubmit = async () => {
-    // e.preventDefault()
     setIsSubmitting(true)
     try {
       const { data } = await loginUser(user)
@@ -41,6 +41,7 @@ const Login = () => {
       <h1>StackOverflow</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <p className="errors">{error.data.msg}</p>}
+        {state?.message && <p className='info'>{state.message}</p>}
         <h3>Login</h3>
         <label>Email</label>
         <input

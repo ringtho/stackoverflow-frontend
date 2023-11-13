@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './AddAnswer.scss'
 import { useSelector } from 'react-redux'
 import { addAnswer } from '../../api'
+import { useForm } from 'react-hook-form'
 
 const AddAnswer = () => {
   const [answer, setAnswer] = useState('')
@@ -11,8 +12,7 @@ const AddAnswer = () => {
     setAnswer(e.target.value)
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const onSubmit = async () => {
     try {
         const res = await addAnswer({id: question._id, answer})
         console.log(res)
@@ -21,17 +21,21 @@ const AddAnswer = () => {
     }
   }
 
+  const { handleSubmit, formState: { errors }, register} = useForm()
   return (
     <div>
-      <form className="add__answer" onSubmit={handleSubmit}>
+      <form className="add__answer" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="answer">Add Answer</label>
         <textarea
+          {...register('answer', {required: 'Please provide an answer'})}
           id="answer"
           placeholder="eg React or JS"
           onChange={handleOnchange}
           value={answer}
-          required
         />
+        {errors?.answer?.message && (
+          <small className='errors'>{errors.answer.message}</small>
+        )}
         <button className="submit-button">Submit</button>
       </form>
     </div>

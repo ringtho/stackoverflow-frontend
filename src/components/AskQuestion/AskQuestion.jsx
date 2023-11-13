@@ -3,6 +3,7 @@ import './AskQuestion.scss'
 import { addQuestion } from '../../api'
 import { useDispatch } from 'react-redux'
 import { setAskActive, setReload } from '../../reduxSlice/questionsSlice'
+import { useForm } from 'react-hook-form'
 
 const AskQuestion = () => {
   const [question, setQuestion] = useState({
@@ -19,9 +20,8 @@ const AskQuestion = () => {
     setQuestion({...question, [name]: value })
   }
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async () => {
     setIsSubmitting(true)
-    e.preventDefault()
     try {
         await addQuestion(question)
         setIsSubmitting(false)
@@ -32,19 +32,24 @@ const AskQuestion = () => {
     }
   }
 
+  const { handleSubmit, formState: { errors }, register } = useForm()
+
   return (
     <section className="ask__container form__container">
-      <form className="ask__wrapper" onSubmit={handleSubmit}>
+      <form className="ask__wrapper" onSubmit={handleSubmit(onSubmit)}>
         <h4>Ask Question</h4>
         <label htmlFor="title">Title</label>
         <input
+          {...register('title', { required: 'Please provide a title' })}
           type="text"
           name="title"
           value={question.title}
           onChange={handleChange}
           id="title"
-          required
         />
+        {errors?.title?.message && (
+          <small className="errors">{errors.title.message}</small>
+        )}
         <label htmlFor="description">Description</label>
         <textarea
           name="description"

@@ -27,7 +27,7 @@ const Register = () => {
       const { data } = await registerUser(user)
       localStorage.setItem('stackUser', JSON.stringify(data))
       navigate('/login', 
-      { state: 'Thanks for creating an account. Login to continue'})
+      { state: { message: 'Thanks for creating an account. Login to continue' }})
     } catch (error) {
       setError(error.response)
     } finally {
