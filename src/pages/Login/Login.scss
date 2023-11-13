@@ -1,0 +1,14 @@
+.errors {
+    color: var(--errors-color);
+}
+
+.new_user {
+    font-size: 0.75rem;
+    text-align: end;
+
+    &:hover,
+    &:focus {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+}

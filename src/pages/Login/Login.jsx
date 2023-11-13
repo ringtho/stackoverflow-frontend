@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { loginUser } from '../../api'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import './Login.scss'
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -17,8 +19,8 @@ const Login = () => {
     setUser({ ...user, [name]: value })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const onSubmit = async () => {
+    // e.preventDefault()
     setIsSubmitting(true)
     try {
       const { data } = await loginUser(user)
@@ -31,33 +33,51 @@ const Login = () => {
       setIsSubmitting(false)
     }
   }
+  
+  const { register, formState: { errors }, handleSubmit } = useForm()
 
   return (
     <section className="auth__container">
       <h1>StackOverflow</h1>
-      <form onSubmit={handleSubmit}>
-        {error && <div>{error.data.msg}</div>}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {error && <p className="errors">{error.data.msg}</p>}
         <h3>Login</h3>
         <label>Email</label>
         <input
+          {...register('email', {
+            required: 'Email is required',
+            validate: {
+              matchPattern: (v) =>
+                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                'Please provide a valid email address',
+            },
+          })}
           type="email"
           placeholder="eg john@google.com"
           name="email"
           id="email"
           value={user.email}
           onChange={handleOnChange}
-          required
         />
-        <label htmlFor='password'>Password</label>
+        {errors?.email?.message && (
+          <small className="errors">{errors.email.message}</small>
+        )}
+        <label htmlFor="password">Password</label>
         <input
+          {...register('password', { required: 'Password is required' })}
           type="password"
           placeholder="********"
           name="password"
           id="password"
           value={user.password}
           onChange={handleOnChange}
-          required
         />
+        {errors?.password?.message && (
+          <small className="errors">{errors.password.message}</small>
+        )}
+        <Link to="/register">
+          <p className="new_user">New User? Sign Up</p>
+        </Link>
         <button disabled={isSubmitting}>
           {isSubmitting ? 'SUBMITTING' : 'SUBMIT'}
         </button>

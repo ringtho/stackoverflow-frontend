@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './Register.scss'
 import { registerUser } from '../../api'
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate, Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -21,13 +21,13 @@ const Register = () => {
     setUser({ ...user, [name]: value })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const onSubmit = async () => {
     setIsSubmitting(true)
     try {
       const { data } = await registerUser(user)
       localStorage.setItem('stackUser', JSON.stringify(data))
-      navigate('/')
+      navigate('/login', 
+      { state: 'Thanks for creating an account. Login to continue'})
     } catch (error) {
       setError(error.response)
     } finally {
@@ -35,48 +35,65 @@ const Register = () => {
     }
   }
 
+  const { register, handleSubmit, formState: { errors }} = useForm()
+
   return (
     <section className="auth__container">
       <h1>StackOverflow</h1>
-      <form onSubmit={handleSubmit}>
-        {error && (
-          <div>
-            {error.data.msg}
-          </div>
-        )}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {error && <p className="errors">{error.data.msg}</p>}
         <h3>Register</h3>
         <label htmlFor="name">Full Name</label>
         <input
+          {...register('name', { required: 'Please provide a name' })}
           type="text"
           id="name"
           name="name"
           placeholder="eg John Doe"
           value={user.name}
           onChange={handleOnChange}
-          required
         />
-        <label htmlFor='email'>Email</label>
+        {errors?.name?.message && (
+          <small className="errors">{errors.name.message}</small>
+        )}
+        <label htmlFor="email">Email</label>
         <input
+          {...register('email', {
+            required: 'Please provide an email',
+            validate: {
+              matchPattern: (v) =>
+                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                'Please provide a valid email address',
+            },
+          })}
           type="email"
           placeholder="eg john@google.com"
           name="email"
           id="email"
           value={user.email}
           onChange={handleOnChange}
-          required
         />
-        <label htmlFor='password'>Password</label>
+        {errors?.email?.message && (
+          <small className="errors">{errors.email.message}</small>
+        )}
+        <label htmlFor="password">Password</label>
         <input
+          {...register('password', { required: 'Please provide a password' })}
           type="password"
           placeholder="********"
           name="password"
           id="password"
           value={user.password}
           onChange={handleOnChange}
-          required
         />
+        {errors?.password?.message && (
+          <small className="errors">{errors.password.message}</small>
+        )}
+        <Link to="/login">
+          <p className="new_user">Already a member? Login</p>
+        </Link>
         <button disabled={isSubmitting}>
-          {isSubmitting? 'SUBMITTING' : 'SUBMIT'}
+          {isSubmitting ? 'SUBMITTING' : 'SUBMIT'}
         </button>
       </form>
     </section>
