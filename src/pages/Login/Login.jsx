@@ -24,7 +24,6 @@ const Login = () => {
     setIsSubmitting(true)
     try {
       const { data } = await loginUser(user)
-      console.log(data)
       localStorage.setItem('stackUser', JSON.stringify(data))
       navigate('/')
     } catch (error) {

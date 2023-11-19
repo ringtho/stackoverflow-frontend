@@ -2,11 +2,13 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.scss'
 import { getAuthenticatedUser } from '../../api'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../reduxSlice/usersSlice'
 
 const Navbar = () => {
-  const { token } = JSON.parse(localStorage.getItem('stackUser'))
+  const data = JSON.parse(localStorage.getItem('stackUser'))
+  const token = data?.token
+  const { user } = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -16,6 +18,9 @@ const Navbar = () => {
     }
     getUser()
   }, [dispatch])
+
+  const username = user?.name?.split(' ')
+  const initials = username && (username[0][0] + username[1][0])
 
   return (
     <nav className="nav__container">
@@ -30,6 +35,7 @@ const Navbar = () => {
                   <Link to='/login'>Login</Link>
                 </div>
               : <div>
+                  <div className='avatar'>{initials}</div>
                   <Link to='/login'>Logout</Link>
                 </div>
             }

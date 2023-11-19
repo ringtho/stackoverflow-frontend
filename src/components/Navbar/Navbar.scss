@@ -14,3 +14,13 @@
     z-index: 2;
     
 }
+
+.avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FB9F89;
+}
