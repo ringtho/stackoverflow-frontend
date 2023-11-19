@@ -24,3 +24,12 @@
     align-items: center;
     background-color: #FB9F89;
 }
+
+.logout__btn {
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+}
